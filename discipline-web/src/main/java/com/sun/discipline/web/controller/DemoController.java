@@ -30,7 +30,7 @@ public class DemoController
         return "Hello World!      "+ UUIDUtils.getUUID();
     }
 
-    @RequestMapping("login")
+    @RequestMapping("/login")
     public boolean login(@RequestParam("code") String code,@RequestParam("password") String password){
         User user = userMapper.getByCodeAndPassword(code, password);
 
