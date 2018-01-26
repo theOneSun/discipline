@@ -17,7 +17,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-        http.authorizeRequests()
+        http.csrf()
+            .disable()//禁用csrf保护
+            .authorizeRequests()
             .antMatchers("/public/**")
             .permitAll()
             .antMatchers("/demo/**")
@@ -28,7 +30,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
             .formLogin()//表单登录
             .usernameParameter("code")//设置登录的账号的key是code
 //            .passwordParameter("123")//设置登录提交的密码的key是123
-            .permitAll();//允许所有人登录
+            .permitAll()//允许所有人登录
+            .and()
+            .logout()
+//            .logoutUrl("/public/logout")
+            .logoutSuccessUrl("/public/logout")
+            //.logoutSuccessHandler(logoutSuccessHandler)
+            .invalidateHttpSession(true)
+//            .addLogoutHandler(logoutHandler)
+            .deleteCookies("JSESSIONID")
+            .and();
     }
 
 

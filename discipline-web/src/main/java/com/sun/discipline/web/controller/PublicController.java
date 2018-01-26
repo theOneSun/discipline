@@ -15,4 +15,9 @@ public class PublicController
     public String sayHello(){
         return "This is public Hello World!      "+ UUIDUtils.getUUID();
     }
+    @RequestMapping("/logout")
+    public String logout(){
+        return "退出登录!";
+    }
+
 }
