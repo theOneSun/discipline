@@ -20,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
         http.csrf()
             .disable()//禁用csrf保护
             .authorizeRequests()
-            .antMatchers("/public/**")
+            .antMatchers("/public/**","/login/**")
             .permitAll()
             .antMatchers("/demo/**")
             .hasRole("admin")
@@ -28,6 +28,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
             .authenticated()//以上三个方法的作用:确保我们应用中的所有请求都需要用户被认证
             .and()//java配置使用and()方法相当于XML标签的关闭。 这样允许我们继续配置父类节点
             .formLogin()//表单登录
+//            .loginPage("/templates/login.html")
+            .successForwardUrl("/demo/loginSuccess")
             .usernameParameter("code")//设置登录的账号的key是code
 //            .passwordParameter("123")//设置登录提交的密码的key是123
             .permitAll()//允许所有人登录

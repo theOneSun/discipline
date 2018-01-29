@@ -20,4 +20,8 @@ public class PublicController
         return "退出登录!";
     }
 
+    @RequestMapping("/login")
+    public String login(){
+        return "假装这是登录页!";
+    }
 }

@@ -35,4 +35,8 @@ public class DemoController
 
         return !ObjectUtils.isEmpty(user);
     }
+    @RequestMapping("/loginSuccess")
+    public String loginSuccess(){
+       return "登录成功!";
+    }
 }
