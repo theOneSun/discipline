@@ -11,4 +11,6 @@ import org.apache.ibatis.annotations.Param;
 public interface UserMapper
 {
     User getByCodeAndPassword(@Param("code") String code, @Param("password") String password);
+
+    User getByCode(@Param("code") String code);
 }

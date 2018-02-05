@@ -5,4 +5,7 @@
     <select id="getByCodeAndPassword" resultType="com.sun.discipline.domain.common.User">
         SELECT * FROM `user` WHERE `password` = #{password} AND `code` = #{code}
     </select>
+    <select id="getByCode" resultType="com.sun.discipline.domain.common.User">
+        SELECT * FROM `user` WHERE `code` = #{code}
+    </select>
 </mapper>
