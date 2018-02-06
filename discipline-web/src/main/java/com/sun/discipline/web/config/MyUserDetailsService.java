@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
 
 /**
@@ -31,8 +32,13 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userMapper.getByCode(username);
+        if (ObjectUtils.isEmpty(user)){
+            throw new UsernameNotFoundException("用户不存在");
+        }
         String password = passwordEncoder.encode(user.getPassword());
-        logger.info("登录的用户是: " + username + "encode 后的密码是: " + password);
-        return new org.springframework.security.core.userdetails.User(username, password, AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
+        logger.info("登录的用户是: " + username + " encode 后的密码是: " + password);
+        org.springframework.security.core.userdetails.User resultUser = new org.springframework.security.core.userdetails.User(username, password, AuthorityUtils
+                .commaSeparatedStringToAuthorityList("admin"));
+        return resultUser;
     }
 }
