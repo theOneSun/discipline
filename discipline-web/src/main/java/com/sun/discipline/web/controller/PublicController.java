@@ -59,7 +59,7 @@ public class PublicController
         return "退出登录!";
     }
 
-    @RequestMapping("/login")
+//    @RequestMapping("/login")
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
     public JsonResponse login(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
@@ -87,7 +87,7 @@ public class PublicController
 
     //模拟登录页判断重定向
     @RequestMapping("/judgePage")
-    public void judgePage(HttpServletRequest request,HttpServletResponse response) throws IOException
+    public void judgePage(HttpServletRequest request,HttpServletResponse response) throws Exception
     {
 //        HttpSession session = request.getSession();
 //        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -96,15 +96,58 @@ public class PublicController
             response.sendRedirect( request.getContextPath() + "/login.html");
         }else {*/
             //如果判断是 AJAX 请求,直接设置为session超时
-            if (request.getHeader("x-requested-with") != null && request.getHeader("x-requested-with")
-                                                                        .equals("XMLHttpRequest"))
-            {
-                response.setHeader("sessionstatus", "timeout");
-                response.getWriter().write("123");
-            } else
-            {
-                response.sendRedirect(request.getContextPath() + "/login.html");
-            }
+        //--------------------
+        SavedRequest savedRequest = requestCache.getRequest(request, response);
+        if (savedRequest != null)
+        {
+            String targetUrl = savedRequest.getRedirectUrl();
+            logger.info("请求登录的url" + targetUrl);
+        }
+        //--------------------
+        if (request.getHeader("x-requested-with") != null && request.getHeader("x-requested-with")
+                                                                    .equals("XMLHttpRequest"))
+        {
+            response.setHeader("sessionstatus", "timeout");
+            String path = request.getContextPath() + "/login.html";
+            System.out.println(path);
+            response.sendRedirect(path);
+//            response.sendRedirect("https://www.baidu.com/");
+//            response.getWriter().write("123");
+        } else
+        {
+            String path = judgeLoginPage(request);
+            System.out.println(path);
+            response.sendRedirect(path);
+        }
 //        }
+    }
+
+
+    private String judgeLoginPage(final HttpServletRequest request) throws Exception
+    {
+        final String agentHeader = request.getHeader("User-Agent");
+        if (StringUtils.isBlank(agentHeader))
+        {
+            throw new Exception("User-Agent请求头缺失");
+        }
+        final String[] mobileHeaders = {"Android", "iPhone", "iPod", "iPad", "Windows Phone", "MQQBrowser"};
+        boolean isMobileBrowser = false;
+        for (final String agent : mobileHeaders)
+        {
+            if (agentHeader.contains(agent))
+            {
+                isMobileBrowser = true;
+                break;
+            }
+        }
+        if (isMobileBrowser)
+        {
+            return request.getContextPath()+"/login.html";
+//            return "https://www.baidu.com/";
+        } else
+        {
+//            return "http://172.16.8.10:8080/#/buySuccess";
+            return request.getContextPath()+"/login.html";
+        }
     }
 }

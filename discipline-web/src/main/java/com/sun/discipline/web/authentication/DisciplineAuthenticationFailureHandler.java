@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * @author sunjian.
@@ -34,8 +35,10 @@ public class DisciplineAuthenticationFailureHandler implements AuthenticationFai
                                         AuthenticationException exception) throws IOException, ServletException
     {
         logger.info("登录失败");
+//        throw new RuntimeException("密码错误");
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write(objectMapper.writeValueAsString(exception));
+        HashMap<String, String> map = new HashMap<>();
+        response.getWriter().write(objectMapper.writeValueAsString(exception.getMessage()));
     }
 }
