@@ -74,7 +74,7 @@ public class PublicController
                                                                                    .getLoginPage());
             }
         }
-        return JsonResponse.failureJsonResponse("请登录");
+        return JsonResponse.failureJsonResponse("123","请登录");
     }
 
     //注册
@@ -107,7 +107,7 @@ public class PublicController
         if (request.getHeader("x-requested-with") != null && request.getHeader("x-requested-with")
                                                                     .equals("XMLHttpRequest"))
         {
-            response.setHeader("sessionstatus", "timeout");
+            response.setHeader("session-status", "timeout");
             String path = request.getContextPath() + "/login.html";
             System.out.println(path);
             response.sendRedirect(path);

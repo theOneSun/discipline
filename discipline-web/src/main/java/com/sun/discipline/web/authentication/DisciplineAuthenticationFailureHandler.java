@@ -1,6 +1,8 @@
 package com.sun.discipline.web.authentication;
 
+import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.discipline.domain.common.JsonResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,11 @@ public class DisciplineAuthenticationFailureHandler implements AuthenticationFai
 //        throw new RuntimeException("密码错误");
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         response.setContentType("application/json;charset=UTF-8");
-        HashMap<String, String> map = new HashMap<>();
-        response.getWriter().write(objectMapper.writeValueAsString(exception.getMessage()));
+        //        HashMap<String, Object> map = new HashMap<>();
+//        map.put("success",false);
+//        map.put("errorCode",5641321);
+//        map.put("message",objectMapper.writeValueAsString(exception.getMessage()));
+        response.getWriter().write(JSON.toJSONString(JsonResponse.failureJsonResponse("13465","登录失败")));
+//        response.getWriter().write(objectMapper.writeValueAsString(exception.getMessage()));
     }
 }

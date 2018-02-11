@@ -13,14 +13,15 @@ import lombok.NoArgsConstructor;
 public class JsonResponse
 {
     private boolean success;
+    private String errorCode;
     private String message;
 
     public static JsonResponse successJsonResponse(String message)
     {
-        return new JsonResponse(true,message);
+        return new JsonResponse(true,null,message);
     }
-    public static JsonResponse failureJsonResponse(String message)
+    public static JsonResponse failureJsonResponse(String errorCode,String message)
     {
-        return new JsonResponse(false,message);
+        return new JsonResponse(false,errorCode,message);
     }
 }
