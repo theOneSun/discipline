@@ -8,4 +8,13 @@
     <select id="getByCode" resultType="com.sun.discipline.domain.common.User">
         SELECT * FROM `user` WHERE `code` = #{code}
     </select>
+    <select id="getByMobile" resultType="com.sun.discipline.domain.common.User">
+        SELECT * FROM `user` WHERE `mobile` = #{mobile}
+    </select>
+    <select id="getByOpenId" resultType="com.sun.discipline.domain.common.WechatUser">
+        SELECT * FROM `wx_user` WHERE open_id = #{openId}
+    </select>
+    <select id="getByUserId" resultType="com.sun.discipline.domain.common.WechatUser">
+        SELECT * FROM `wx_user` WHERE user_id = #{userId}
+    </select>
 </mapper>

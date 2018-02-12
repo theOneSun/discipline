@@ -102,6 +102,10 @@ public class PublicController
         {
             String targetUrl = savedRequest.getRedirectUrl();
             logger.info("请求登录的url" + targetUrl);
+        }else {
+            //直接进的登录页
+            String targetUrl = "/index.html";
+            logger.info("直接访问的登录页");
         }
         //--------------------
         if (request.getHeader("x-requested-with") != null && request.getHeader("x-requested-with")

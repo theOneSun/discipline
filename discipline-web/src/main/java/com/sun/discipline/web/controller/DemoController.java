@@ -4,6 +4,7 @@ import com.sun.discipline.dao.mybatis.UserMapper;
 import com.sun.discipline.domain.common.User;
 import com.sun.discipline.utils.math.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,5 +39,11 @@ public class DemoController
     @RequestMapping("/loginSuccess")
     public String loginSuccess(){
        return "登录成功!";
+    }
+
+    @RequestMapping("/info")
+    public String currentUser(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return principal.toString();
     }
 }
