@@ -88,7 +88,7 @@ public class PublicController
 
     //模拟登录页判断重定向
     @RequestMapping("/judgePage")
-    public String judgePage(HttpServletRequest request,HttpServletResponse response) throws Exception
+    public void judgePage(HttpServletRequest request,HttpServletResponse response) throws Exception
     {
 //        HttpSession session = request.getSession();
 //        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -116,7 +116,7 @@ public class PublicController
             String path = request.getContextPath() + "/login.html";
             System.out.println(path);
 //            response.sendRedirect(path);
-            return new JsonResponse(false,"123","未登录").toString();
+//            return new JsonResponse(false,"123","未登录").toString();
 //            response.sendRedirect("https://www.baidu.com/");
 //            response.getWriter().write("123");
         } else
@@ -124,7 +124,7 @@ public class PublicController
             String path = judgeLoginPage(request);
             System.out.println(path);
             response.sendRedirect(path);
-            return "redirect:/"+path;
+//            return "redirect:/"+path;
         }
 //        }
     }
