@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +39,7 @@ public class PublicController
 {
     private final SecurityProperties securityProperties;
     private RequestCache requestCache = new HttpSessionRequestCache();
-    Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     @Autowired
@@ -87,7 +88,7 @@ public class PublicController
 
     //模拟登录页判断重定向
     @RequestMapping("/judgePage")
-    public void judgePage(HttpServletRequest request,HttpServletResponse response) throws Exception
+    public String judgePage(HttpServletRequest request,HttpServletResponse response) throws Exception
     {
 //        HttpSession session = request.getSession();
 //        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -114,7 +115,8 @@ public class PublicController
             response.setHeader("session-status", "timeout");
             String path = request.getContextPath() + "/login.html";
             System.out.println(path);
-            response.sendRedirect(path);
+//            response.sendRedirect(path);
+            return new JsonResponse(false,"123","未登录").toString();
 //            response.sendRedirect("https://www.baidu.com/");
 //            response.getWriter().write("123");
         } else
@@ -122,6 +124,7 @@ public class PublicController
             String path = judgeLoginPage(request);
             System.out.println(path);
             response.sendRedirect(path);
+            return "redirect:/"+path;
         }
 //        }
     }
@@ -147,11 +150,26 @@ public class PublicController
         if (isMobileBrowser)
         {
             return request.getContextPath()+"/login.html";
+//            return "/login.html";
 //            return "https://www.baidu.com/";
         } else
         {
 //            return "http://172.16.8.10:8080/#/buySuccess";
+//            return "/login.html";
             return request.getContextPath()+"/login.html";
         }
+    }
+
+    @RequestMapping("/test/redirect")
+    public String testRedirect(HttpServletResponse response) throws IOException
+    {
+        response.sendRedirect("/demo.html");
+        return "123";
+    }
+
+    @RequestMapping("/mobile/login")
+    public String mobileLoginPage() throws IOException
+    {
+        return "This is mobileLoginPage";
     }
 }

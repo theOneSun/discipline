@@ -76,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
             .invalidateHttpSession(true)
 //            .addLogoutHandler(logoutHandler)
             .deleteCookies("JSESSIONID")
-            .and();
+            .and().authorizeRequests().antMatchers("/mobile/**").authenticated().and().formLogin().loginPage("/public/mobile/login").and();
     }
 
 
