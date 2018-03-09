@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 /**
  * @author sunjian.
@@ -149,14 +150,15 @@ public class PublicController
         }
         if (isMobileBrowser)
         {
-            return request.getContextPath()+"/login.html";
-//            return "/login.html";
+//            return request.getContextPath()+"/login.html?requestUrl="+ URLEncoder.encode("https://www.baidu.com","utf-8");
+            return "/login.html";
 //            return "https://www.baidu.com/";
         } else
         {
 //            return "http://172.16.8.10:8080/#/buySuccess";
-//            return "/login.html";
-            return request.getContextPath()+"/login.html";
+            return "/login.html";
+//            return request.getContextPath()+"/login.html?requestUrl="+ URLEncoder.encode("https://www.baidu.com","utf-8");
+//            return request.getContextPath()+"/login.html?requestUrl=https://www.baidu.com";
         }
     }
 

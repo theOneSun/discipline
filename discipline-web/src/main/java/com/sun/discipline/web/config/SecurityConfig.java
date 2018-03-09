@@ -59,8 +59,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
             .authenticated()//以上三个方法的作用:确保我们应用中的所有请求都需要用户被认证
             .and()//java配置使用and()方法相当于XML标签的关闭。 这样允许我们继续配置父类节点
             .formLogin()//表单登录
-//            .loginPage("/login.html")
-            .loginPage("/public/judgePage")//请求被拦截后的登录页面
+            .loginPage("/login.html")
+//            .loginPage("/public/judgePage")//请求被拦截后的登录页面
             .loginProcessingUrl("/public/login")//点击登录验证的接口,与表单的action对应
 //            .successHandler(disciplineAuthenticationSuccessHandler)
             .failureHandler(disciplineAuthenticationFailureHandler)
@@ -76,7 +76,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
             .invalidateHttpSession(true)
 //            .addLogoutHandler(logoutHandler)
             .deleteCookies("JSESSIONID")
-            .and().authorizeRequests().antMatchers("/mobile/**").authenticated().and().formLogin().loginPage("/public/mobile/login").and();
+            //.and().authorizeRequests().antMatchers("/mobile/**").authenticated().and().formLogin().loginPage("/public/mobile/login").and()
+         ;
     }
 
 
